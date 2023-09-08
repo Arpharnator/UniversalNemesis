@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <faction name="UniversalNemesis" 
+    display_name="League of Evil" short_name="League of Evil" processing_group="UniversalNemesis"
+    base_info_source="UniversalNemesisBaseInfo" deep_info_source="UniversalNemesisDeepInfo" team_center_color="cEF9B0F" team_border_color="c2e5090"
+    type="SpecialFaction"
+    description="The Universal Nemesis has arrived into the galaxy. It will attempt to lay waste to it in order to strengthen itself and its troops.
+
+&lt;color=#f25e1c&gt;EXTREMELY HIGH IMPACT:&lt;/color&gt; While the difficulty varies depending on the chosen settings, the Universal Nemesis typically requires a great deal of planning to deal with.
+The Universal Nemesis and its troops do not mark up, but instead all gain max hull and shield for every enemy killed, permanently. With numbers and quality, they may prove difficult to stop once launched. Note that the Universal Nemesis invades alone, and is very weak at that point, making it a prime occasion to kill him."
+		ai_can_send_waves_against_this="true" 
+		can_use_spire_debris="false"
+		impact="Brutal" 
+		must_be_at_most_one="true"
+		CanBeFriendlyToPlayer="true" 
+		CanBeHostileToAll="true" 
+		CanBeOnMinorFactionTeam="true" 
+		icon_name_for_lobby="Ships3/ZenithArchitraveCastra"
+		defeat_condition="HasNoStrength">
+        <npc_ship_cap name="Strikecraft"    overriding_per_faction_cap_of_stacks="5000" />
+        <custom_field name="Intensity"      display_name="Intensity" description="Just how terrifying is this faction?" sort_group="200" setting_type="IntSlider" default="5" min="1" max="10"/>
+        <custom_field name="Allegiance"     display_name="Allegiance" description="Is this faction friendly to the AI(s), humans, or nobody?" sort_group="250" setting_type="CustomDropdownArbitraryOptions" arbitrary_options="Hostile To All,Friendly To Players,Hostile To Players Only,Minor Faction Team Red,Minor Faction Team Blue,Minor Faction Team Green,Dark Alliance" default_option="Dark Alliance" />
+	<custom_field name="InvasionTime" display_name="Invasion Time" description="The Universal Nemesis can be set to invade the galaxy at some unknown time during the game, or immediately. An immediate spawn is very scary, with late invasion times being far less powerful."
+                  sort_group="300" setting_type="CustomDropdownArbitraryOptions" arbitrary_options="Immediate,Early Game,Mid Game,Late Game" default_option="Mid Game"/>
+    <custom_field name="SpawnNearPlayer" is_advanced_setting="true" display_name="Spawn Near Player" description="Not recommended unless friendly to you."
+                  sort_group="300" setting_type="BoolToggle" default="false"  />
+	</faction>
+</root>
