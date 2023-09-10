@@ -29,12 +29,15 @@ namespace Arcen.AIW2.External
             //To deal with the harmless game start error cringe
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
 
-                    if (factionExternal != null)
-                        BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.nemesis_hull_divider);
+                        if (factionExternal != null)
+                            BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.nemesis_hull_divider);
+                    }
                 }
             }
             catch
@@ -50,11 +53,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.nemesis_shield_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.nemesis_shield_divider);
+                    }
                 }
             }
             catch
@@ -167,7 +173,7 @@ namespace Arcen.AIW2.External
                             {
                                 //debugCode = 1600;
                                 var otherPlanetFactionData = planet.GetStanceDataForFaction(factionExternal.AttachedFaction);
-                                if (otherPlanetFactionData[FactionStance.Hostile].TotalStrength > 2000 && !planet.IsZenithArchitraveTerritory && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "ZenithDysonSphere") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Gray") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Chromatic") && !(GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "NanobotHive") != null))
+                                if (otherPlanetFactionData[FactionStance.Hostile].TotalStrength > 2000 && !planet.IsZenithArchitraveTerritory && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "ZenithDysonSphere") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Gray") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Chromatic") && !(planet.GetFirstMatching(GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "NanobotHive"), false, false) != null))
                                 {
                                     planetsToAttack.Add(planet);
                                 }
@@ -179,7 +185,7 @@ namespace Arcen.AIW2.External
                                 Nemesis.Planet.DoForPlanetsWithinXHops(1, delegate (Planet planet, Int16 Distance)
                                 {
                                     //debugCode = 1600;
-                                    if (!planet.IsZenithArchitraveTerritory && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "ZenithDysonSphere") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Gray") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Chromatic") && !(GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "NanobotHive") != null))
+                                    if (!planet.IsZenithArchitraveTerritory && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "ZenithDysonSphere") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Gray") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Chromatic") && !(planet.GetFirstMatching(GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "NanobotHive"), false, false) != null))
                                         planetsToAttack.Add(planet);
                                     return DelReturn.Continue;
                                 });
@@ -212,7 +218,7 @@ namespace Arcen.AIW2.External
 
                         }
                         //we stumbled upon ennemies while moving
-                        else if (factionData[FactionStance.Hostile].TotalStrength > 2000 && Nemesis.HasExplicitOrders() && !Nemesis.Planet.IsZenithArchitraveTerritory && !(Nemesis.Planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "ZenithDysonSphere") && !(Nemesis.Planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Gray") && !(Nemesis.Planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Chromatic") && !(GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "NanobotHive") != null))
+                        else if (factionData[FactionStance.Hostile].TotalStrength > 2000 && Nemesis.HasExplicitOrders() && !Nemesis.Planet.IsZenithArchitraveTerritory && !(Nemesis.Planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "ZenithDysonSphere") && !(Nemesis.Planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Gray") && !(Nemesis.Planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Chromatic") && !(Nemesis.Planet.GetFirstMatching(GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "NanobotHive"), false, false) != null))
                         {
                             GameCommand moveCommand = GameCommand.Create(BaseGameCommand.CommandsByCode[BaseGameCommand.Code.MoveManyToOnePoint_NPCVisitTargetOnPlanet], GameCommandSource.AnythingElse);
                             moveCommand.PlanetOrderWasIssuedFrom = Nemesis.Planet.Index;
@@ -259,12 +265,13 @@ namespace Arcen.AIW2.External
             //To deal with the harmless game start error cringe
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-
-                    if (factionExternal != null)
-                        BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.weak_nemesis_hull_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();                        if (factionExternal != null)
+                            BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.weak_nemesis_hull_divider);
+                    }
                 }
             }
             catch
@@ -280,11 +287,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.weak_nemesis_shield_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.weak_nemesis_shield_divider);
+                    }
                 }
             }
             catch
@@ -397,7 +407,7 @@ namespace Arcen.AIW2.External
                             {
                                 //debugCode = 1600;
                                 var otherPlanetFactionData = planet.GetStanceDataForFaction(factionExternal.AttachedFaction);
-                                if (otherPlanetFactionData[FactionStance.Hostile].TotalStrength > 2000 && !planet.IsZenithArchitraveTerritory && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "ZenithDysonSphere") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Gray") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Chromatic") && !(GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "NanobotHive") != null))
+                                if (otherPlanetFactionData[FactionStance.Hostile].TotalStrength > 2000 && !planet.IsZenithArchitraveTerritory && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "ZenithDysonSphere") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Gray") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Chromatic") && !(planet.GetFirstMatching(GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "NanobotHive"), false, false) != null))
                                 {
                                     planetsToAttack.Add(planet);
                                 }
@@ -409,7 +419,7 @@ namespace Arcen.AIW2.External
                                 Nemesis.Planet.DoForPlanetsWithinXHops(1, delegate (Planet planet, Int16 Distance)
                                 {
                                     //debugCode = 1600;
-                                    if(!planet.IsZenithArchitraveTerritory && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "ZenithDysonSphere") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Gray") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Chromatic") && !(GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "NanobotHive") != null))
+                                    if(!planet.IsZenithArchitraveTerritory && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "ZenithDysonSphere") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Gray") && !(planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Chromatic") && !(planet.GetFirstMatching(GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "NanobotHive"), false, false) != null))
                                         planetsToAttack.Add(planet);
                                     return DelReturn.Continue;
                                 });
@@ -442,7 +452,7 @@ namespace Arcen.AIW2.External
 
                         }
                         //we stumbled upon ennemies while moving
-                        else if (factionData[FactionStance.Hostile].TotalStrength > 2000 && Nemesis.HasExplicitOrders() && !Nemesis.Planet.IsZenithArchitraveTerritory && !(Nemesis.Planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "ZenithDysonSphere") && !(Nemesis.Planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Gray") && !(Nemesis.Planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Chromatic") && !(GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "NanobotHive") != null))
+                        else if (factionData[FactionStance.Hostile].TotalStrength > 2000 && Nemesis.HasExplicitOrders() && !Nemesis.Planet.IsZenithArchitraveTerritory && !(Nemesis.Planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "ZenithDysonSphere") && !(Nemesis.Planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Gray") && !(Nemesis.Planet.GetControllingOrInfluencingFaction().SpecialFactionData.InternalName == "SpireSphere_Chromatic") && !(Nemesis.Planet.GetFirstMatching(GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "NanobotHive"), false, false) != null))
                         {
                             GameCommand moveCommand = GameCommand.Create(BaseGameCommand.CommandsByCode[BaseGameCommand.Code.MoveManyToOnePoint_NPCVisitTargetOnPlanet], GameCommandSource.AnythingElse);
                             moveCommand.PlanetOrderWasIssuedFrom = Nemesis.Planet.Index;
@@ -473,11 +483,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.cataclysm_hull_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.cataclysm_hull_divider);
+                    }
                 }
             }
             catch
@@ -493,11 +506,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.cataclysm_shield_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.cataclysm_shield_divider);
+                    }
                 }
             }
             catch
@@ -525,11 +541,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.catastrophe_hull_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.catastrophe_hull_divider);
+                    }
                 }
             }
             catch
@@ -544,11 +563,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.catastrophe_shield_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.catastrophe_shield_divider);
+                    }
                 }
             }
             catch
@@ -576,11 +598,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.disaster_hull_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.disaster_hull_divider);
+                    }
                 }
             }
             catch
@@ -596,11 +621,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.disaster_shield_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.disaster_shield_divider);
+                    }
                 }
             }
             catch
@@ -628,11 +656,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.villain_hull_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.villain_hull_divider);
+                    }
                 }
             }
             catch
@@ -648,11 +679,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.villain_shield_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.villain_shield_divider);
+                    }
                 }
             }
             catch
@@ -680,11 +714,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.henchman_hull_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.henchman_hull_divider);
+                    }
                 }
             }
             catch
@@ -700,11 +737,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.henchman_shield_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.henchman_shield_divider);
+                    }
                 }
             }
             catch
@@ -732,11 +772,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.beacon_hull_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseHull = RelatedEntity.DataForMark.BaseHullPoints + (factionExternal.bonusHull / factionExternal.beacon_hull_divider);
+                    }
                 }
             }
             catch
@@ -752,11 +795,14 @@ namespace Arcen.AIW2.External
         {
             try
             {
-                if (!RelatedEntity.IsFakeEntity)
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
-                    UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
-                    if (factionExternal != null)
-                        BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.beacon_shield_divider);
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
+                        if (factionExternal != null)
+                            BaseShields = RelatedEntity.DataForMark.BaseShieldPoints + (factionExternal.bonusShield / factionExternal.beacon_shield_divider);
+                    }
                 }
             }
             catch

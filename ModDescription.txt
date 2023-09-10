@@ -1,3 +1,11 @@
 No tech support provided from Arcen Games on mods.
 
 Introduces the Universal Nemesis / League Of Evil as a new faction.
+
+Led by the Universal Nemesis, the League Of Evil has decided to invade your galaxy.
+The Universal Nemesis is a powerful being with exceptional corrupting abilities, making heavy use of devour and conversion mechanics, and its troops are not lacking.
+The League Of Evil grows in strength by defeating its foes, granting them extra max Hull and Shield thanks to a new mechanics cleverly implemented by @Dismiss. Once available, they will also utilize the weapon upgrade mechanic.
+Put an end to the League Of Evil's conquest by destroying the Universal Nemesis, putting the faction at a standstill.
+Can be put on any team, including the Dark Alliance, and you can also choose when it will invade. Is on the Dark Alliance by default.
+Has rewards for Necromancer.
+Note : The League Of Evil is a worthy foe, and should not be taken lightly.

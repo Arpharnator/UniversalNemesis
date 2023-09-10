@@ -64,7 +64,7 @@
 			unit_to_spawn_on_infestation="UniversalVillain" infestation_function_name="Entrance"
 			shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
 			>
-		<outgoing_damage_modifier based_on="mass_tx" comparison_type="LessThan" compared_to="5" multiplier="0" />
+		<outgoing_damage_modifier based_on="mass_tx" comparison_type="LessThan" compared_to="1" multiplier="0" />
 		</system>
 		<system name="W2" display_name="Enthrall"
 			category="Weapon" firing_timing="OnlyInRange"
@@ -152,8 +152,8 @@
 			category="Weapon" firing_timing="OnlyInRange"
 			damage_per_shot="5000" range="AboveAverage3" shot_speed="Normal" rate_of_fire="Normal" fires_salvos_sequentially="true"
 			shots_per_salvo="5" 
-			can_devour="true" devour_mass_lower_than="1" devour_function_name="Ruin"
-			unit_to_spawn_on_infestation="UniversalDisaster" infestation_function_name="Entrance"
+			can_devour="true" devour_mass_lower_than="5" devour_function_name="Ruin"
+			unit_to_spawn_on_infestation="UniversalVillain" infestation_function_name="Entrance"
 			shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
 			>
 		</system>
@@ -492,8 +492,8 @@
 		cost_for_ai_to_purchase="100000"		
 		hull_points="250000" shield_points="500000" speed="AboveAverage1"
 		metal_cost="1500000" energy_consumption="50000"
-		armor_mm="150" albedo="0.7" mass_tx="10"
-		engine_gx="26"
+		armor_mm="150" albedo="0.7" mass_tx="7"
+		engine_gx="18"
 		ship_or_structure_explosion_sfx="ShipLostMassive_Explosion"
 		ship_or_structure_explosion_if_on_other_planet_sfx="ShipLostMassive_Explosion"
 		voice_group="Turret"
