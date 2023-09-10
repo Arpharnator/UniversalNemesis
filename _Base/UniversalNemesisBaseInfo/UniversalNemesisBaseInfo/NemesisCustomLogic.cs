@@ -737,6 +737,9 @@ namespace Arcen.AIW2.External
         {
             try
             {
+                //if(UniversalNemesisBaseInfo. != null){
+
+                //}
                 if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
                     if (!RelatedEntity.IsFakeEntity)

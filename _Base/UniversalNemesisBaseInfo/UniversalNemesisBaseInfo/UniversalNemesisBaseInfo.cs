@@ -8,6 +8,7 @@ namespace Arcen.AIW2.External
     {
         public static readonly bool debug = false;
         //Important Value
+        public static UniversalNemesisBaseInfo Instance;
         public int Intensity { get; private set; }
         public bool humanAllied = false;
         public bool aiAllied = false;
@@ -87,7 +88,11 @@ namespace Arcen.AIW2.External
         #endregion
 
         #region Cleanup
-        public UniversalNemesisBaseInfo() => Cleanup();
+        public UniversalNemesisBaseInfo()
+        {
+            Instance = this;
+            Cleanup();
+        }
 
         protected override void Cleanup()
         {
