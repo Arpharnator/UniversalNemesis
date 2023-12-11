@@ -90,7 +90,7 @@ namespace Arcen.AIW2.External
                             //No need to go past the first loop if we are to seed near the player
                             if (preferredHomeworldDistance == 0)
                                 break;
-                        } while (workingAllowedSpawnPlanets.Count < 16);
+                        } while (workingAllowedSpawnPlanets.Count < 24);
                     }
 
                     //debugCode = 900;

@@ -7,7 +7,7 @@ using Arcen.AIW2.External;
 namespace Arcen.AIW2.External
 {
 
-    public class UniversalNemesis_CustomLogic : IGameEntityStatAdjuster, IGameEntityPerSecondSpecialLogic, IGameEntityDescriptionAppender
+    public class UniversalNemesis_CustomLogic : IGameEntityStatAdjuster, IGameEntityDamageAdjuster, IGameEntityPerSecondSpecialLogic, IGameEntityDescriptionAppender
     {
         public void AddToDescriptionBuffer(GameEntity_Squad RelatedEntityOrNull, GameEntityTypeData RelatedEntityTypeData, ArcenCharacterBufferBase Buffer)
         {
@@ -22,6 +22,31 @@ namespace Arcen.AIW2.External
 
             }
             
+        }
+
+        public int GetAdjustedBaseDamage(GameEntity_Squad RelatedEntity, EntitySystem RelatedSystem, ref int BaseDamage, ref int BaseCorrosionDamage)
+        {
+            try
+            {
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
+                {
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        //I am using RelatedEntity.DataForMark.BaseHullPoints to know how much damage to give
+                        //IE we get a ratio of the hull increase and increase the weapons by the same ratio
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>(); if (factionExternal != null)
+                            BaseDamage = BaseDamage + (int)(BaseDamage * ((float)factionExternal.bonusHull / factionExternal.nemesis_hull_divider / (RelatedEntity.DataForMark.BaseHullPoints)));
+                        BaseCorrosionDamage = BaseCorrosionDamage + (int)(BaseCorrosionDamage * (((float)factionExternal.bonusHull / factionExternal.nemesis_hull_divider) / RelatedEntity.DataForMark.BaseHullPoints));
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return BaseDamage;
+            return BaseCorrosionDamage;
         }
 
         public int GetAdjustedBaseHull(GameEntity_Squad RelatedEntity, ref int BaseHull)
@@ -243,7 +268,7 @@ namespace Arcen.AIW2.External
         }
     }
 
-    public class WeakUniversalNemesis_CustomLogic : IGameEntityStatAdjuster, IGameEntityPerSecondSpecialLogic, IGameEntityDescriptionAppender
+    public class WeakUniversalNemesis_CustomLogic : IGameEntityStatAdjuster, IGameEntityDamageAdjuster, IGameEntityPerSecondSpecialLogic, IGameEntityDescriptionAppender
     {
         public void AddToDescriptionBuffer(GameEntity_Squad RelatedEntityOrNull, GameEntityTypeData RelatedEntityTypeData, ArcenCharacterBufferBase Buffer)
         {
@@ -258,6 +283,31 @@ namespace Arcen.AIW2.External
 
             }
 
+        }
+
+        public int GetAdjustedBaseDamage(GameEntity_Squad RelatedEntity, EntitySystem RelatedSystem, ref int BaseDamage, ref int BaseCorrosionDamage)
+        {
+            try
+            {
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
+                {
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        //I am using RelatedEntity.DataForMark.BaseHullPoints to know how much damage to give
+                        //IE we get a ratio of the hull increase and increase the weapons by the same ratio
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>(); if (factionExternal != null)
+                            BaseDamage = BaseDamage + (int)(BaseDamage * ((float)factionExternal.bonusHull / factionExternal.weak_nemesis_hull_divider / (RelatedEntity.DataForMark.BaseHullPoints)));
+                        BaseCorrosionDamage = BaseCorrosionDamage + (int)(BaseCorrosionDamage * (((float)factionExternal.bonusHull / factionExternal.weak_nemesis_hull_divider) / RelatedEntity.DataForMark.BaseHullPoints));
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return BaseDamage;
+            return BaseCorrosionDamage;
         }
 
         public int GetAdjustedBaseHull(GameEntity_Squad RelatedEntity, ref int BaseHull)
@@ -477,8 +527,32 @@ namespace Arcen.AIW2.External
         }
     }
 
-    public class UniversalCataclysm_CustomLogic : IGameEntityStatAdjuster, IGameEntityPerSecondSpecialLogic
+    public class UniversalCataclysm_CustomLogic : IGameEntityStatAdjuster, IGameEntityDamageAdjuster, IGameEntityPerSecondSpecialLogic
     {
+        public int GetAdjustedBaseDamage(GameEntity_Squad RelatedEntity, EntitySystem RelatedSystem, ref int BaseDamage, ref int BaseCorrosionDamage)
+        {
+            try
+            {
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
+                {
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        //I am using RelatedEntity.DataForMark.BaseHullPoints to know how much damage to give
+                        //IE we get a ratio of the hull increase and increase the weapons by the same ratio
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>(); if (factionExternal != null)
+                            BaseDamage = BaseDamage + (int)(BaseDamage * ((float)factionExternal.bonusHull / factionExternal.cataclysm_hull_divider / (RelatedEntity.DataForMark.BaseHullPoints)));
+                        BaseCorrosionDamage = BaseCorrosionDamage + (int)(BaseCorrosionDamage * (((float)factionExternal.bonusHull / factionExternal.cataclysm_hull_divider) / RelatedEntity.DataForMark.BaseHullPoints));
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return BaseDamage;
+            return BaseCorrosionDamage;
+        }
         public int GetAdjustedBaseHull(GameEntity_Squad RelatedEntity, ref int BaseHull)
         {
             try
@@ -535,8 +609,32 @@ namespace Arcen.AIW2.External
         }
     }
 
-    public class UniversalCatastrophe_CustomLogic : IGameEntityStatAdjuster, IGameEntityPerSecondSpecialLogic
+    public class UniversalCatastrophe_CustomLogic : IGameEntityStatAdjuster, IGameEntityDamageAdjuster, IGameEntityPerSecondSpecialLogic
     {
+        public int GetAdjustedBaseDamage(GameEntity_Squad RelatedEntity, EntitySystem RelatedSystem, ref int BaseDamage, ref int BaseCorrosionDamage)
+        {
+            try
+            {
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
+                {
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        //I am using RelatedEntity.DataForMark.BaseHullPoints to know how much damage to give
+                        //IE we get a ratio of the hull increase and increase the weapons by the same ratio
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>(); if (factionExternal != null)
+                            BaseDamage = BaseDamage + (int)(BaseDamage * ((float)factionExternal.bonusHull / factionExternal.catastrophe_hull_divider / (RelatedEntity.DataForMark.BaseHullPoints)));
+                        BaseCorrosionDamage = BaseCorrosionDamage + (int)(BaseCorrosionDamage * (((float)factionExternal.bonusHull / factionExternal.catastrophe_hull_divider) / RelatedEntity.DataForMark.BaseHullPoints));
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return BaseDamage;
+            return BaseCorrosionDamage;
+        }
         public int GetAdjustedBaseHull(GameEntity_Squad RelatedEntity, ref int BaseHull)
         {
             try
@@ -592,8 +690,32 @@ namespace Arcen.AIW2.External
         }
     }
 
-    public class UniversalDisaster_CustomLogic : IGameEntityStatAdjuster, IGameEntityPerSecondSpecialLogic
+    public class UniversalDisaster_CustomLogic : IGameEntityStatAdjuster, IGameEntityDamageAdjuster, IGameEntityPerSecondSpecialLogic
     {
+        public int GetAdjustedBaseDamage(GameEntity_Squad RelatedEntity, EntitySystem RelatedSystem, ref int BaseDamage, ref int BaseCorrosionDamage)
+        {
+            try
+            {
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
+                {
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        //I am using RelatedEntity.DataForMark.BaseHullPoints to know how much damage to give
+                        //IE we get a ratio of the hull increase and increase the weapons by the same ratio
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>(); if (factionExternal != null)
+                            BaseDamage = BaseDamage + (int)(BaseDamage * ((float)factionExternal.bonusHull / factionExternal.disaster_hull_divider / (RelatedEntity.DataForMark.BaseHullPoints)));
+                        BaseCorrosionDamage = BaseCorrosionDamage + (int)(BaseCorrosionDamage * (((float)factionExternal.bonusHull / factionExternal.disaster_hull_divider) / RelatedEntity.DataForMark.BaseHullPoints));
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return BaseDamage;
+            return BaseCorrosionDamage;
+        }
         public int GetAdjustedBaseHull(GameEntity_Squad RelatedEntity, ref int BaseHull)
         {
             try
@@ -650,8 +772,32 @@ namespace Arcen.AIW2.External
         }
     }
 
-    public class UniversalVillain_CustomLogic : IGameEntityStatAdjuster, IGameEntityPerSecondSpecialLogic
+    public class UniversalVillain_CustomLogic : IGameEntityStatAdjuster, IGameEntityDamageAdjuster, IGameEntityPerSecondSpecialLogic
     {
+        public int GetAdjustedBaseDamage(GameEntity_Squad RelatedEntity, EntitySystem RelatedSystem, ref int BaseDamage, ref int BaseCorrosionDamage)
+        {
+            try
+            {
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
+                {
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        //I am using RelatedEntity.DataForMark.BaseHullPoints to know how much damage to give
+                        //IE we get a ratio of the hull increase and increase the weapons by the same ratio
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>(); if (factionExternal != null)
+                            BaseDamage = BaseDamage + (int)(BaseDamage * ((float)factionExternal.bonusHull / factionExternal.villain_hull_divider / (RelatedEntity.DataForMark.BaseHullPoints)));
+                        BaseCorrosionDamage = BaseCorrosionDamage + (int)(BaseCorrosionDamage * (((float)factionExternal.bonusHull / factionExternal.villain_hull_divider) / RelatedEntity.DataForMark.BaseHullPoints));
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return BaseDamage;
+            return BaseCorrosionDamage;
+        }
         public int GetAdjustedBaseHull(GameEntity_Squad RelatedEntity, ref int BaseHull)
         {
             try
@@ -708,8 +854,33 @@ namespace Arcen.AIW2.External
         }
     }
 
-    public class UniversalHenchman_CustomLogic : IGameEntityStatAdjuster, IGameEntityPerSecondSpecialLogic
+    public class UniversalHenchman_CustomLogic : IGameEntityStatAdjuster, IGameEntityDamageAdjuster, IGameEntityPerSecondSpecialLogic
     {
+        public int GetAdjustedBaseDamage(GameEntity_Squad RelatedEntity, EntitySystem RelatedSystem, ref int BaseDamage, ref int BaseCorrosionDamage)
+        {
+            try
+            {
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
+                {
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        //I am using RelatedEntity.DataForMark.BaseHullPoints to know how much damage to give
+                        //IE we get a ratio of the hull increase and increase the weapons by the same ratio
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>(); if (factionExternal != null)
+                            BaseDamage = BaseDamage + (int)(BaseDamage * ((float)factionExternal.bonusHull / factionExternal.henchman_hull_divider / (RelatedEntity.DataForMark.BaseHullPoints)));
+                        BaseCorrosionDamage = BaseCorrosionDamage + (int)(BaseCorrosionDamage * (((float)factionExternal.bonusHull / factionExternal.henchman_hull_divider) / RelatedEntity.DataForMark.BaseHullPoints));
+                    }
+
+                }
+            }
+            catch
+            {
+
+            }
+
+            return BaseDamage;
+            return BaseCorrosionDamage;
+        }
         public int GetAdjustedBaseHull(GameEntity_Squad RelatedEntity, ref int BaseHull)
         {
             try
@@ -769,8 +940,33 @@ namespace Arcen.AIW2.External
         }
     }
 
-    public class UniversalBeacon_CustomLogic : IGameEntityStatAdjuster, IGameEntityPerSecondSpecialLogic
+    public class UniversalBeacon_CustomLogic : IGameEntityStatAdjuster, IGameEntityDamageAdjuster, IGameEntityPerSecondSpecialLogic
     {
+        public int GetAdjustedBaseDamage(GameEntity_Squad RelatedEntity, EntitySystem RelatedSystem, ref int BaseDamage, ref int BaseCorrosionDamage)
+        {
+            try
+            {
+                if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
+                {
+                    if (!RelatedEntity.IsFakeEntity)
+                    {
+                        //I am using RelatedEntity.DataForMark.BaseHullPoints to know how much damage to give
+                        //IE we get a ratio of the hull increase and increase the weapons by the same ratio
+                        UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>(); if (factionExternal != null)
+                            BaseDamage = BaseDamage + (int)(BaseDamage * ((float)factionExternal.bonusHull / factionExternal.beacon_hull_divider / (RelatedEntity.DataForMark.BaseHullPoints)));
+                        BaseCorrosionDamage = BaseCorrosionDamage + (int)(BaseCorrosionDamage * (((float)factionExternal.bonusHull / factionExternal.beacon_hull_divider) / RelatedEntity.DataForMark.BaseHullPoints));
+                    }
+
+                }
+            }
+            catch
+            {
+
+            }
+
+            return BaseDamage;
+            return BaseCorrosionDamage;
+        }
         public int GetAdjustedBaseHull(GameEntity_Squad RelatedEntity, ref int BaseHull)
         {
             try
@@ -798,6 +994,10 @@ namespace Arcen.AIW2.External
         {
             try
             {
+                /*if (UniversalNemesisBaseInfo.Instance != null)
+                {
+
+                }*/
                 if (RelatedEntity.GetFactionInternalNameSafe() == "UniversalNemesis")
                 {
                     if (!RelatedEntity.IsFakeEntity)
