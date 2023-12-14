@@ -2,103 +2,12 @@
 <root>
 
 	<!-- Nemesis -->
-	<entity name="WeakUniversalNemesis" tags="WeakUniversalNemesis,LeagueOfEvilUnit" npc_ship_cap_type="SpecialThingsToAlwaysSeed" ship_class_name="UniversalNemesisClass"
+	<entity name="UniversalNemesis" tags="UniversalNemesisKing,LeagueOfEvilUnit" npc_ship_cap_type="SpecialThingsToAlwaysSeed" ship_class_name="UniversalNemesisClass"
         thematic_groups="AI"
 		draw_in_galaxy_view="true"
 	    visuals="Assets/_FinalGameMeshes/AIExtragalactic/Tier3_ExtragalacticWarSlicerFrigate/Tier3_ExtragalacticWarSlicerFrigate.prefab"
 		icon_name="Ships3/ZenithArchitraveCastra" gimbal_icon_size_multiplier="2.2"
-		uses_large_health_bar="true"
-		category="Ship"
-	    size_scale="21"
-			visuals_scale_multiplier="64"
-			y_offset_of_icon="30"
-        collision_priority="8000"
-	    display_name="Weak Universal Nemesis"
-		display_name_for_sidebar="Nemesis"
-	    description="The Universal Nemesis is the center of all activities related to its faction, and is armed appropriately. Killing it would render the other villains inert. Possesses incredible corrupting power."
-		starting_mark_level="Mark7" tech_upgrades_that_benefit_me="Unused" does_not_use_multipliers_from_mark_level="true"
-		cost_for_ai_to_purchase="100000"		
-		hull_points="4000000" shield_points="2000000" speed="AboveAverage1"
-		metal_cost="10000000" energy_consumption="50000"
-		armor_mm="300" albedo="0.7" mass_tx="16"
-		engine_gx="26"
-		ship_or_structure_explosion_sfx="ShipLostMassive_Explosion"
-		ship_or_structure_explosion_if_on_other_planet_sfx="ShipLostMassive_Explosion"
-		voice_group="Turret"
-		max_number_of_weapon_points="1000"
-		priority_as_ai_target="IrreplaceableBigAsTheyCome" priority_as_frd_target="BigThreateningWeapon" priority_to_protect="Irreplaceable"
-		per_second_custom_logic_dll="UniversalNemesisBaseInfo"
-		per_second_custom_logic_type="Arcen.AIW2.External.WeakUniversalNemesis_CustomLogic"
-		seconds_to_fully_regenerate_hull="600"
-		damage_taken_cannot_be_more_than_this_percentage_of_max_health="0.05"
-		pushes_enemy_shields="true"
-		returns_this_percentage_of_damage_if_damaged_by_enemy_attack="1.25"
-		>
-		<data_extension name="DLC3"
-                            necromancer_resource_one_to_grant_on_death="200"
-							necromancer_hacking_to_grant_on_death="50"
-                            immune_to_necromancy="true"
-                            />
-		
-		<system name="WJ" display_name="Entice"
-				category="Weapon" firing_timing="OnlyInRange"
-				damage_per_shot="600" range="AboveAverage3" shot_speed="Normal" rate_of_fire="Devourer" fires_salvos_sequentially="true"
-				shot_type_data="DevourerShot_Nemesis"
-				shots_per_salvo="3" 
-				area_of_effect_size="1000"			
-				unit_to_spawn_on_infestation="UniversalHenchman" infestation_function_name="Entice"
-				>   
-		<!--<system name="W1" display_name="Retaliative Laser Array"
-				category="Weapon" firing_timing="WhenParentEntityHit" range="AboveAverage3"
-				returns_this_percentage_of_damage_when_firing_retalitatory_shot="1.25" shot_speed="Normal" fires_salvos_sequentially="false"
-				damage_per_shot="100" rate_of_fire="Normal"
-				number_of_weapon_points_to_gain_on_firing="1"
-				shot_type_data="LaserPulse_RedLevel2">
-		</system><outgoing_damage_modifier based_on="MaxHull" comparison_type="MultiplesOf" compared_to="500000" multiplier="1" />	-->			
-		</system>	
-		<system name="W3" display_name="Entrance"
-			category="Weapon" firing_timing="OnlyInRange"
-			damage_per_shot="20000" range="AboveAverage3" shot_speed="Normal" rate_of_fire="VeryLow" fires_salvos_sequentially="true"
-			shots_per_salvo="5" 
-			can_devour="true" devour_mass_lower_than="5.5" devour_function_name="Ruin"
-			unit_to_spawn_on_infestation="UniversalVillain" infestation_function_name="Entrance"
-			shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
-			>
-		<outgoing_damage_modifier based_on="mass_tx" comparison_type="LessThan" compared_to="1" multiplier="0" />
-		</system>
-		<system name="W2" display_name="Enthrall"
-			category="Weapon" firing_timing="OnlyInRange"
-			damage_per_shot="100000" range="High2" shot_speed="Normal" rate_of_fire="VeryLow" fires_salvos_sequentially="true"  
-			can_devour="true" devour_mass_lower_than="7.1" devour_function_name="Ruin"
-			health_change_by_max_health_divided_by_this_per_attack="10"
-			unit_to_spawn_on_infestation="UniversalDisaster" infestation_function_name="Enthrall"
-			shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
-			>
-			<outgoing_damage_modifier based_on="mass_tx" comparison_type="LessThan" compared_to="5.5" multiplier="0" />
-		<!--number_of_weapon_points_to_gain_on_firing="20" number_of_weapon_points_to_consume_on_firing="200" additional_damage_modifier_per_weapon_point="500"<outgoing_damage_modifier based_on="MaxHull" comparison_type="MultiplesOf" compared_to="500000" multiplier="1" />-->
-		</system>
-		<system name="W1" display_name="Taint"
-			category="Weapon" firing_timing="OnlyInRange"
-			damage_per_shot="750000" range="High2" shot_speed="Normal" rate_of_fire="VeryLow" fires_salvos_sequentially="true"  
-			health_change_by_max_health_divided_by_this_per_attack="10"
-			unit_to_spawn_on_infestation="UniversalCatastrophe" infestation_function_name="Taint"
-			shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
-			>
-			<outgoing_damage_modifier based_on="mass_tx" comparison_type="LessThan" compared_to="7.1" multiplier="0" />
-		<!--number_of_weapon_points_to_gain_on_firing="20" number_of_weapon_points_to_consume_on_firing="200" additional_damage_modifier_per_weapon_point="500"<outgoing_damage_modifier based_on="MaxHull" comparison_type="MultiplesOf" compared_to="500000" multiplier="1" />-->
-		</system>
-		<system name="T" display_name="Incredible Tachyon Array"
-				category="Passive" tachyon_points="25" tachyon_range="EssentiallyInfinite" tachyon_hits_albedo_less_than="0.85"
-				>
-		</system>
-		
-	</entity>
-	
-	<entity name="UniversalNemesis" tags="UniversalNemesis,LeagueOfEvilUnit" npc_ship_cap_type="SpecialThingsToAlwaysSeed" ship_class_name="UniversalNemesisClass"
-        thematic_groups="AI"
-		draw_in_galaxy_view="true"
-	    visuals="Assets/_FinalGameMeshes/AIExtragalactic/Tier3_ExtragalacticWarSlicerFrigate/Tier3_ExtragalacticWarSlicerFrigate.prefab"
-		icon_name="Ships3/ZenithArchitraveCastra" gimbal_icon_size_multiplier="2.2"
+		material_override_path="Assets/_DLC3/Frigates/BladeSpawnerFFH/BladeSpawnerFFH.prefab" material_override_bundle="exp3_neinzul_abyss"
 		uses_large_health_bar="true"
 		category="Ship"
 	    size_scale="21"
@@ -107,13 +16,14 @@
         collision_priority="8000"
 	    display_name="Universal Nemesis"
 		display_name_for_sidebar="Nemesis"
-	    description="The Universal Nemesis is the center of all activities related to its faction, and is armed appropriately. Killing it would render the other villains inert. Possesses incredible corrupting power. This version is the upgraded variant."
+	    description="The Universal Nemesis is the center of all activities related to its faction, and is armed appropriately. Killing it would render the other villains inert. Possesses incredible corrupting power."
 		starting_mark_level="Mark7" tech_upgrades_that_benefit_me="Unused" does_not_use_multipliers_from_mark_level="true"
 		cost_for_ai_to_purchase="100000"		
 		hull_points="8000000" shield_points="4000000" speed="AboveAverage1"
 		metal_cost="10000000" energy_consumption="50000"
 		armor_mm="300" albedo="0.7" mass_tx="16"
 		engine_gx="26"
+		strength_multiplier="3"
 		ship_or_structure_explosion_sfx="ShipLostMassive_Explosion"
 		ship_or_structure_explosion_if_on_other_planet_sfx="ShipLostMassive_Explosion"
 		voice_group="Turret"
@@ -125,6 +35,8 @@
 		damage_taken_cannot_be_more_than_this_percentage_of_max_health="0.05"
 		pushes_enemy_shields="true"
 		returns_this_percentage_of_damage_if_damaged_by_enemy_attack="1.25"
+		hacking_to_grant_on_death="50"
+		science_to_grant_on_death="5000"
 		>
 		<data_extension name="DLC3"
                             necromancer_resource_one_to_grant_on_death="200"
@@ -134,34 +46,26 @@
 		
 		<system name="WJ" display_name="Entice"
 				category="Weapon" firing_timing="OnlyInRange"
-				damage_per_shot="600" range="AboveAverage3" shot_speed="Normal" rate_of_fire="Devourer" fires_salvos_sequentially="true"
+				damage_per_shot="6000" range="AboveAverage3" shot_speed="Normal" rate_of_fire="Devourer" fires_salvos_sequentially="true"
 				shot_type_data="DevourerShot_Nemesis"
 				shots_per_salvo="3" 
-				area_of_effect_size="1000"			
+				area_of_effect_size="1000"	
+				aoe_spreads_damage_among_available_targets="true"			
 				unit_to_spawn_on_infestation="UniversalHenchman" infestation_function_name="Entice"
-				>   
-		<!--<system name="W1" display_name="Retaliative Laser Array"
-				category="Weapon" firing_timing="WhenParentEntityHit" range="AboveAverage3"
-				returns_this_percentage_of_damage_when_firing_retalitatory_shot="1.25" shot_speed="Normal" fires_salvos_sequentially="false"
-				damage_per_shot="100" rate_of_fire="Normal"
-				number_of_weapon_points_to_gain_on_firing="1"
-				shot_type_data="LaserPulse_RedLevel2">
-		</system><outgoing_damage_modifier based_on="MaxHull" comparison_type="MultiplesOf" compared_to="500000" multiplier="1" />	-->			
+				>   	
 		</system>	
 		<system name="W3" display_name="Entrance"
 			category="Weapon" firing_timing="OnlyInRange"
-			damage_per_shot="5000" range="AboveAverage3" shot_speed="Normal" rate_of_fire="Normal" fires_salvos_sequentially="true"
+			damage_per_shot="20000" range="AboveAverage3" shot_speed="Normal" rate_of_fire="Normal" fires_salvos_sequentially="true"
 			shots_per_salvo="5" 
-			can_devour="true" devour_mass_lower_than="5" devour_function_name="Ruin"
 			unit_to_spawn_on_infestation="UniversalVillain" infestation_function_name="Entrance"
 			shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
 			>
 		</system>
 		<system name="W4" display_name="Enthrall"
 			category="Weapon" firing_timing="OnlyInRange"
-			damage_per_shot="20000" range="High2" shot_speed="Normal" rate_of_fire="VeryLow" fires_salvos_sequentially="true"
+			damage_per_shot="60000" range="High2" shot_speed="Normal" rate_of_fire="VeryLow" fires_salvos_sequentially="true"
 			shots_per_salvo="2" 
-			can_devour="true" devour_mass_lower_than="5.5" devour_function_name="Ruin"
 			unit_to_spawn_on_infestation="UniversalDisaster" infestation_function_name="Enthrall"
 			shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
 			>
@@ -169,8 +73,7 @@
 		</system>
 		<system name="W2" display_name="Taint"
 			category="Weapon" firing_timing="OnlyInRange"
-			damage_per_shot="100000" range="High2" shot_speed="Normal" rate_of_fire="VeryLow" fires_salvos_sequentially="true"  
-			can_devour="true" devour_mass_lower_than="7.1" devour_function_name="Ruin"
+			damage_per_shot="500000" range="High2" shot_speed="Normal" rate_of_fire="VeryLow" fires_salvos_sequentially="true"  
 			health_change_by_max_health_divided_by_this_per_attack="10"
 			unit_to_spawn_on_infestation="UniversalCatastrophe" infestation_function_name="Taint"
 			shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
@@ -194,64 +97,14 @@
 		</system>
 		
 	</entity>
-	
-	<!--
-	<system name="L" display_name="Allure Launcher"
-				category="Weapon" firing_timing="OnlyInRange" shot_type_data="UniversalNemesisAllureBomb"
-				damage_per_shot="5" range="Planetary" shot_speed="Slow" rate_of_fire="Devourer" fires_salvos_sequentially="true"  
-				shots_per_salvo="2"  cloaking_percent_loss_from_firing="0.2"
-				use_alternate_rate_of_fire_after_x_shots="4" alternate_rate_of_fire="ExtremelyLow"  use_alternate_rate_of_fire_for_x_shots_before_reverting="1"
-				>
-		</system>
-	<entity name="UniversalNemesisAllureBomb"
-	         thematic_groups="Zenith,DarkZenith,Drone"	
-		special_entity_type="SmallShipNotStackable"
-		tags="LeagueOfEvilUnit"
-		visuals="Assets/_DLC2/Zenith/SeekerBomb/SeekerBomb.prefab" visuals_bundle="exp2_zenith_onslaught"
-		icon_name="Ships3/SeekerBomb" gimbal_icon_size_multiplier="1.25"
-		voice_group="Silent"
-		category="Ship"
-		size_scale="2.4"
-		visuals_scale_multiplier="7"
-		collision_priority="50"
-		display_name="Alluring Bomb"
-		description="Extra vulnerable upon launch, these bombs turn allied ships into Universal Henchmen."
-		starting_mark_level="Mark7"  does_not_use_multipliers_from_mark_level="true"
-		self_attritions_X_percent_per_second_if_parent_ship_not_on_planet="5"
-		always_self_attritions="true"
-		cost_for_ai_to_purchase="10" strength_multiplier="0.1" speed_multiplier_first_5_seconds_on_planet="0.1"
-		hull_points="10000" shield_points="0" speed="VeryHigh1" 
-		metal_cost="3000" energy_consumption="250"
-		armor_mm="50" albedo="0.3" engine_gx="22" mass_tx="2"
-		metal_cost_multiplier_for_scrapping="0"
-		ship_or_structure_explosion_sfx="ShipSmall_Explosion"
-		ship_or_structure_explosion_if_on_other_planet_sfx="ShipLostOnOtherPlanet_Explosion"
-		shot_fired_sfx="BasicLaunchWhine_Firing"
-		priority_as_ai_target="NormalFleetship" priority_as_frd_target="NormalFleetship" priority_to_protect="Expendable"
-		immune_to_swapping_between_fleets="true"
-		fleet_membership="Planetary"
-		cannot_target_or_alert_ai_reinforcement_spots="true"
-		>
-		 <system name="WM" display_name="Detonation" category="Weapon" firing_timing="OnlyInRange" shot_type_data="ExplosiveFlakBurst"
-				damage_per_shot="5000" range="AlmostNone" seek_range="Planetary" shot_speed="Instant" rate_of_fire="Devourer" fires_salvos_sequentially="false"
-				area_of_effect_size="1000" maximum_number_of_targets_hit_per_shot="20"	
-				aoe_and_beam_damage_multiplier_to_non_primary_target="30"
-				health_change_by_max_health_divided_by_this_per_attack="-1"
-				unit_to_spawn_on_infestation="UniversalHenchman" infestation_function_name="Temptation"
-				>
-		</system>
-		<incoming_damage_modifier based_on="MyTimeAtPlanet" comparison_type="LessThan" compared_to="5" multiplier="5" />
-	
-	<ship_class_data can_be_zombified_and_similar="false" />
-	</entity>
-	-->
+
 	<!--Cataclysm-->
-	
 	<entity name="UniversalCataclysm" tags="UniversalCataclysm,LeagueOfEvilUnit" ship_class_name="GreaterLeagueOfEvilClass"
         thematic_groups="AI"
 		draw_in_galaxy_view="true"
 	    visuals="Assets/_FinalGameMeshes/Nanocaust/Abomination/Abomination.prefab"
 		icon_name="Ships4/ElderlingMedium" gimbal_icon_size_multiplier="2.5"
+		material_override_path="Assets/_DLC3/Frigates/BladeSpawnerFFH/BladeSpawnerFFH.prefab" material_override_bundle="exp3_neinzul_abyss"
 		y_offset_of_icon="10"
 		uses_large_health_bar="true"
 		category="Ship"
@@ -260,7 +113,7 @@
         collision_priority="8000"
 	    display_name="Universal Cataclysm"
 		display_name_for_sidebar="Cataclysm"
-	    description="The Universal Cataclysm carries with it untold amounts of destruction. None can escape it."
+	    description="The Universal Cataclysm carries with it untold amounts of destruction. None can escape it. Despite naturally decaying, it is able to harness enough enmity from its foes through its main weapon, so that it can stay alive indefinitely so long it is able to attack."
 		starting_mark_level="Mark7" tech_upgrades_that_benefit_me="Unused" does_not_use_multipliers_from_mark_level="true"
 		cost_for_ai_to_purchase="100000"		
 		hull_points="4000000" shield_points="2000000" speed="AboveAverage1"
@@ -273,10 +126,12 @@
 		priority_as_ai_target="BigThreateningWeapon" priority_as_frd_target="BigThreateningWeapon" priority_to_protect="BigFavoriteToy"
 		per_second_custom_logic_dll="UniversalNemesisBaseInfo"
 		per_second_custom_logic_type="Arcen.AIW2.External.UniversalCataclysm_CustomLogic"
-		seconds_to_fully_regenerate_hull="1800"
+		self_attritions_X_percent_per_second_if_parent_ship_not_on_planet="0.1"
+		always_self_attritions="true"
+		hacking_to_grant_on_death="3"
 		>
 		<data_extension name="DLC3"
-                            necromancer_resource_one_to_grant_on_death="20"
+                            necromancer_resource_one_to_grant_on_death="15"
 							necromancer_hacking_to_grant_on_death="4"
                             immune_to_necromancy="true"
                             />
@@ -357,6 +212,7 @@
 		draw_in_galaxy_view="true"
 	    visuals="Assets/_FinalGameMeshes/Zenith/Dyson4Bastion/DysonBastion.prefab"
 		icon_name="Ships4/VenatorNadir" gimbal_icon_size_multiplier="2.5"
+		material_override_path="Assets/_DLC3/Frigates/BladeSpawnerFFH/BladeSpawnerFFH.prefab" material_override_bundle="exp3_neinzul_abyss"
 		y_offset_of_icon="24"
 		uses_large_health_bar="true"
 		category="Ship"
@@ -365,7 +221,7 @@
         collision_priority="8000"
 	    display_name="Universal Catastrophe"
 		display_name_for_sidebar="Catastrophe"
-	    description="The Universal Catastrophe brings forth ruin, bit by bit until nothing remains."
+	    description="The Universal Catastrophe brings forth ruin, bit by bit until nothing remains. Naturally decays as it is inevitably forgotten."
 		starting_mark_level="Mark7" tech_upgrades_that_benefit_me="Unused" does_not_use_multipliers_from_mark_level="true"
 		cost_for_ai_to_purchase="100000"		
 		hull_points="500000" shield_points="1000000" speed="AboveAverage1"
@@ -378,12 +234,14 @@
 		priority_as_ai_target="BigThreateningWeapon" priority_as_frd_target="BigThreateningWeapon" priority_to_protect="BigFavoriteToy"
 		per_second_custom_logic_dll="UniversalNemesisBaseInfo"
 		per_second_custom_logic_type="Arcen.AIW2.External.UniversalCatastrophe_CustomLogic"
-		seconds_to_fully_regenerate_hull="1800"
+		self_attritions_X_percent_per_second_if_parent_ship_not_on_planet="0.2"
+		always_self_attritions="true"
 		returns_this_percentage_of_damage_if_damaged_by_enemy_attack="0.6"
+		hacking_to_grant_on_death="1"
 		>
 		<data_extension name="DLC3"
-                            necromancer_resource_one_to_grant_on_death="10"
-							necromancer_hacking_to_grant_on_death="3"
+                            necromancer_resource_one_to_grant_on_death="5"
+							necromancer_hacking_to_grant_on_death="2"
                             immune_to_necromancy="true"
                             />
 		<system name="R5" display_name="Ruinous Blast"
@@ -478,6 +336,7 @@
         thematic_groups="AI"
 	    visuals="Assets/_FinalGameMeshes/Nanocaust/MissileCorvetteDeviant/MissileCorvetteDeviant.prefab"
 		icon_name="Ships4/ExoTier2" gimbal_icon_size_multiplier="1.5"
+		material_override_path="Assets/_DLC3/Frigates/BladeSpawnerFFH/BladeSpawnerFFH.prefab" material_override_bundle="exp3_neinzul_abyss"
 		y_offset_of_icon="35"
 		uses_large_health_bar="true"
 		category="Ship"
@@ -486,7 +345,7 @@
         collision_priority="8000"
 	    display_name="Universal Disaster"
 		display_name_for_sidebar="Disaster"
-	    description="The Universal Disaster is fleeting but deadly, and turns the mind of all beings astray."
+	    description="The Universal Disaster is fleeting but deadly, and turns the mind of all beings astray. Its lifespan is short, both through its own decay, and for it is channeled into a formidable weapon."
 		starting_mark_level="Mark7" tech_upgrades_that_benefit_me="Unused" does_not_use_multipliers_from_mark_level="true"
 		cost_for_ai_to_purchase="100000"		
 		hull_points="250000" shield_points="500000" speed="AboveAverage1"
@@ -499,27 +358,20 @@
 		priority_as_ai_target="BigThreateningWeapon" priority_as_frd_target="BigThreateningWeapon" priority_to_protect="BigFavoriteToy"
 		per_second_custom_logic_dll="UniversalNemesisBaseInfo"
 		per_second_custom_logic_type="Arcen.AIW2.External.UniversalDisaster_CustomLogic"
-		seconds_to_fully_regenerate_hull="1800"
+		self_attritions_X_percent_per_second_if_parent_ship_not_on_planet="0.4"
+		always_self_attritions="true"
 		>
 		<data_extension name="DLC3"
-                            necromancer_resource_one_to_grant_on_death="5"
-				necromancer_science_to_grant_on_death="0"
-				necromancer_hacking_to_grant_on_death="2"
+                            necromancer_resource_one_to_grant_on_death="3"
+				necromancer_science_to_grant_on_death="15"
+				necromancer_hacking_to_grant_on_death="0"
 				immune_to_necromancy="true"
 				/>
 		<system name="WJ" display_name="Entrance"
 				category="Weapon" firing_timing="OnlyInRange"
-				damage_per_shot="1000" range="Normal2" shot_speed="Normal" rate_of_fire="Normal" fires_salvos_sequentially="true"
-				unit_to_spawn_on_infestation="UniversalVillain" infestation_function_name="Entrance"
-				health_change_by_max_health_divided_by_this_per_attack="-300"
-				can_devour="true" devour_mass_lower_than="5.1" devour_function_name="Ruin"
-				shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
-				>
-				<!--<outgoing_damage_modifier based_on="MaxHull" comparison_type="MultiplesOf" compared_to="250000" multiplier="1" />	-->			
-		</system>
-		<system name="W2" display_name="Hyperlaser"
-				category="Weapon" firing_timing="OnlyInRange"
 				damage_per_shot="80000" range="Normal2" shot_speed="Normal" rate_of_fire="Normal" fires_salvos_sequentially="true"
+				unit_to_spawn_on_infestation="UniversalVillain" infestation_function_name="Entrance"
+				health_change_by_max_health_divided_by_this_per_attack="-100"
 				shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
 				>
 				<!--<outgoing_damage_modifier based_on="MaxHull" comparison_type="MultiplesOf" compared_to="250000" multiplier="1" />	-->			
@@ -528,7 +380,7 @@
             category="Weapon" firing_timing="OnlyInRange"
             damage_per_shot="8000" range="Normal2" shot_speed="Normal" rate_of_fire="VeryLow"
             shot_type_data="HeavyBeamInvisible"  beam_length_multiplier="1.3" shots_detonate_immediately="true"  beam_weapon_visual_style="Lightning_Blue"
-            beam_chains_out_to_targets_x_times="2" beam_chains_out_to_target_min_range="200" beam_chains_out_to_targets_x_range="2000"
+            beam_chains_out_to_targets_x_times="4" beam_chains_out_to_target_min_range="200" beam_chains_out_to_targets_x_range="2000"
             maximum_number_of_targets_hit_per_shot="25" beam_chains_out_to_max_targets_from_each_source="4"
             aoe_and_beam_damage_multiplier_to_non_primary_target="50" 
 				>
@@ -580,6 +432,7 @@
         thematic_groups="AI"
 	    visuals="assets/_finalgamemeshes/guardians/plasmaguardian/plasmaguardian.prefab"
 		icon_name="Ships4/NeinzulClanlingOrbWeaver" gimbal_icon_size_multiplier="1.2"
+		material_override_path="Assets/_DLC3/Frigates/BladeSpawnerFFH/BladeSpawnerFFH.prefab" material_override_bundle="exp3_neinzul_abyss"
 		y_offset_of_icon="35"
 		uses_large_health_bar="true"
 		category="Ship"
@@ -588,7 +441,7 @@
         collision_priority="8000"
 	    display_name="Universal Villain"
 		display_name_for_sidebar="Villain"
-	    description="The Universal Villain, either corrupted or driven mad, now serves the Universal Nemesis by enticing others through promises of riches. Made by greater evil."
+	    description="The Universal Villain, either corrupted or driven mad, now serves the Universal Nemesis by enticing others through promises of riches. Made by greater evil, and never able to live long."
 		starting_mark_level="Mark7" tech_upgrades_that_benefit_me="Unused" does_not_use_multipliers_from_mark_level="true"
 		cost_for_ai_to_purchase="100000"		
 		hull_points="67500" shield_points="67500" speed="AboveAverage1"
@@ -601,17 +454,18 @@
 		priority_as_ai_target="NormalFleetship" priority_as_frd_target="BiggerFleetship" priority_to_protect="Expendable"
 		per_second_custom_logic_dll="UniversalNemesisBaseInfo"
 		per_second_custom_logic_type="Arcen.AIW2.External.UniversalVillain_CustomLogic"
+		self_attritions_X_percent_per_second_if_parent_ship_not_on_planet="0.8"
+		always_self_attritions="true"
 		>
 		<data_extension name="DLC3"
                             necromancer_resource_one_to_grant_on_death="0"
                             immune_to_necromancy="true"
-				necromancer_science_to_grant_on_death="15"
+				necromancer_science_to_grant_on_death="5"
 				necromancer_hacking_to_grant_on_death="0"
 				/>
 		<system name="WJ" display_name="Entice"
 				category="Weapon" firing_timing="OnlyInRange"
-				damage_per_shot="1500" range="Normal2" shot_speed="Normal" rate_of_fire="Normal" fires_salvos_sequentially="true"
-				can_devour="true" devour_mass_lower_than="1" devour_function_name="Entice"
+				damage_per_shot="8100" range="Normal2" shot_speed="Normal" rate_of_fire="Normal" fires_salvos_sequentially="true"
 				unit_to_spawn_on_infestation="UniversalHenchman" infestation_function_name="Tempt"
 				shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
 				> 
@@ -665,6 +519,7 @@
         thematic_groups="AI"
 	    visuals="Assets/_DLC2/General/ShrikeInterceptor/ShrikeInterceptor.prefab" visuals_bundle="exp2_zenith_onslaught"
 		icon_name="Ships3/ZenithArchitraveCrupellarii"
+		material_override_path="Assets/_DLC3/Frigates/BladeSpawnerFFH/BladeSpawnerFFH.prefab" material_override_bundle="exp3_neinzul_abyss"
 		y_offset_of_icon="35"
 		uses_large_health_bar="true"
 		category="Ship"
@@ -673,7 +528,7 @@
         collision_priority="8000"
 	    display_name="Universal Henchman"
 		display_name_for_sidebar="Henchman"
-	    description="A disposable unit, the Universal Henchman believes no harm will come his way and that he will stumble upon great riches by following the will of the enemy."
+	    description="A disposable unit, the Universal Henchman is a pawn used as a shield for its masters, unaware of what they are preparing."
 		starting_mark_level="Markless"  tech_upgrades_that_benefit_me="Unused"
 		cost_for_ai_to_purchase="100000"		
 		hull_points="8400" shield_points="8400" speed="AboveAverage1"
@@ -686,11 +541,13 @@
 		priority_as_ai_target="NormalFleetship" priority_as_frd_target="NormalFleetship" priority_to_protect="Expendable"
 		per_second_custom_logic_dll="UniversalNemesisBaseInfo"
 		per_second_custom_logic_type="Arcen.AIW2.External.UniversalHenchman_CustomLogic"
+		self_attritions_X_percent_per_second_if_parent_ship_not_on_planet="1.6"
+		always_self_attritions="true"
 		>
 		<data_extension name="DLC3"
                             necromancer_resource_one_to_grant_on_death="0"
                             immune_to_necromancy="true"
-				necromancer_science_to_grant_on_death="2"
+				necromancer_science_to_grant_on_death="1"
 				necromancer_hacking_to_grant_on_death="0"
 				/>
 		<system name="W1" display_name="Jamming Laser"
@@ -705,12 +562,11 @@
 	</entity>
 
 	<!--Beacon-->
-	<entity name="UniversalBeacon" tags="UniversalBeacon,LeagueOfEvilUnit" ship_class_name="GreaterLeagueOfEvilClass"
+	<entity name="UniversalBeacon" tags="UniversalBeacon,LeagueOfEvilUnit,HackForShipType" ship_class_name="GreaterLeagueOfEvilClass"
         thematic_groups="AI"
 	    visuals="Assets/_DLC2/AI/AttractiveMatrixFort/AttractiveMatrixFort.prefab" visuals_bundle="exp2_zenith_onslaught"
 			icon_name="Ships3/AttractiveMatrixFortress" gimbal_icon_size_multiplier="1.5"
 		y_offset_of_icon="35"
-		strength_multiplier="2"
 		uses_large_health_bar="true"
 			category="Ship"
 			size_scale="9"
@@ -721,7 +577,7 @@
 	    description="The Universal Nemesis was here."
 		starting_mark_level="Markless"  tech_upgrades_that_benefit_me="Unused"
 		cost_for_ai_to_purchase="100000"		
-		hull_points="2000000" shield_points="2000000" speed="Immobile"
+		hull_points="1000000" shield_points="1000000" speed="Immobile"
 		metal_cost="300000" energy_consumption="50000"
 		armor_mm="120" albedo="0.45" mass_tx="7"
 		ship_or_structure_explosion_sfx="ShipLostMassive_Explosion"
@@ -730,12 +586,17 @@
 		priority_as_ai_target="BigThreateningWeapon" priority_as_frd_target="BigThreateningWeapon" priority_to_protect="BigFavoriteToy"
 		per_second_custom_logic_dll="UniversalNemesisBaseInfo"
 		per_second_custom_logic_type="Arcen.AIW2.External.UniversalBeacon_CustomLogic"
+		eligible_for_hacks="HackToGrantShipLine_UniversalNemesis"
+		grants_stuff_to_be_added_to_player_fleets="true"
+        grants_stuff_to_be_added_to_player_fleets_strikecraft_options="2"
+		grants_stuff_to_be_added_to_player_fleets_required_tag="UniversalNemesisHackable"
+		hacking_to_grant_on_death="1"
 		>
 		<data_extension name="DLC3"
                             necromancer_resource_one_to_grant_on_death="0"
                             immune_to_necromancy="true"
-				necromancer_science_to_grant_on_death="2"
-				necromancer_hacking_to_grant_on_death="0"
+				necromancer_science_to_grant_on_death="40"
+				necromancer_hacking_to_grant_on_death="2"
 				/>
 		<system name="W1" display_name="Retaliative Laser Array"
 			category="Weapon" firing_timing="WhenParentEntityHit" range="AboveAverage3"
@@ -759,4 +620,98 @@
 				<!--<outgoing_damage_modifier based_on="MaxHull" comparison_type="MultiplesOf" compared_to="250000" multiplier="1" />	-->			
 		</system>
 	</entity>
+	
+	
+	<!-- Hackable ships -->
+	<entity name="HackedUniversalDisaster" tags="LeagueOfEvilUnit,UniversalNemesisHackable,UniversalNemesis" ship_class_name="GreaterLeagueOfEvilClass"
+        thematic_groups="AI"
+	    visuals="Assets/_FinalGameMeshes/Nanocaust/MissileCorvetteDeviant/MissileCorvetteDeviant.prefab"
+		icon_name="Ships4/ExoTier2" gimbal_icon_size_multiplier="1.5"
+		material_override_path="Assets/_DLC3/Frigates/BladeSpawnerFFH/BladeSpawnerFFH.prefab" material_override_bundle="exp3_neinzul_abyss"
+		y_offset_of_icon="35"
+		uses_large_health_bar="true"
+		category="Ship"
+	    size_scale="15"
+		visuals_scale_multiplier="80"
+        collision_priority="8000"
+	    display_name="Bargained Universal Disaster"
+		display_name_for_sidebar="B Disaster"
+	    description="A hacked Universal Disaster, stripped of its corruptive power and much of its combat prowess. It does not degrade by itself, and has lost the ability to turn foes into ally. However, its connexion to its masters still remain, and every ship destroyed by it alongside its own death will empower the League of Evil as though it were a regular League of Evil ship."
+		starting_mark_level="Mark2"
+		mark_level_scale_style="UN_HackedShips"
+		tech_upgrades_that_benefit_me="Alien"
+		cost_for_ai_to_purchase="100000"		
+		hull_points="50000" shield_points="100000" speed="AboveAverage1"
+		metal_cost="100000" energy_consumption="5000"
+		armor_mm="150" albedo="0.7" mass_tx="7"
+		engine_gx="18"
+		ship_or_structure_explosion_sfx="ShipLostMassive_Explosion"
+		ship_or_structure_explosion_if_on_other_planet_sfx="ShipLostMassive_Explosion"
+		voice_group="Turret"
+		priority_as_ai_target="BigThreateningWeapon" priority_as_frd_target="BigThreateningWeapon" priority_to_protect="BigFavoriteToy"
+		>
+		<fleet_membership name="AddedToFleet_MinorFaction" ship_cap_group="Strike" weight="100" cap="3" faction="UniversalNemesis"/>
+		<system name="W2" display_name="Hyperlaser"
+				category="Weapon" firing_timing="OnlyInRange"
+				damage_per_shot="16000" range="Normal2" shot_speed="Normal" rate_of_fire="Normal" fires_salvos_sequentially="true"
+				shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
+				>
+				<!--<outgoing_damage_modifier based_on="MaxHull" comparison_type="MultiplesOf" compared_to="250000" multiplier="1" />	-->			
+		</system>
+		<system name="CE" display_name="Chain Lightning Emitter"
+            category="Weapon" firing_timing="OnlyInRange"
+            damage_per_shot="1600" range="Normal2" shot_speed="Normal" rate_of_fire="VeryLow"
+            shot_type_data="HeavyBeamInvisible"  beam_length_multiplier="1.3" shots_detonate_immediately="true"  beam_weapon_visual_style="Lightning_Blue"
+            beam_chains_out_to_targets_x_times="4" beam_chains_out_to_target_min_range="200" beam_chains_out_to_targets_x_range="2000"
+            maximum_number_of_targets_hit_per_shot="25" beam_chains_out_to_max_targets_from_each_source="4"
+            aoe_and_beam_damage_multiplier_to_non_primary_target="50" 
+				>
+				<!--<outgoing_damage_modifier based_on="MaxHull" comparison_type="MultiplesOf" compared_to="250000" multiplier="1" />-->
+		</system>
+		</entity>
+		
+		<entity name="HackedUniversalVillain" tags="LeagueOfEvilUnit,UniversalNemesisHackable,UniversalNemesis"
+        thematic_groups="AI"
+	    visuals="assets/_finalgamemeshes/guardians/plasmaguardian/plasmaguardian.prefab"
+		icon_name="Ships4/NeinzulClanlingOrbWeaver" gimbal_icon_size_multiplier="1.2"
+		material_override_path="Assets/_DLC3/Frigates/BladeSpawnerFFH/BladeSpawnerFFH.prefab" material_override_bundle="exp3_neinzul_abyss"
+		y_offset_of_icon="35"
+		uses_large_health_bar="true"
+		category="Ship"
+	    size_scale="3.6"
+		visuals_scale_multiplier="4"
+        collision_priority="8000"
+	    display_name="Bargained Universal Villain"
+		display_name_for_sidebar="B Villain"
+	    description="A hacked Universal Villain, stripped of its corruptive power and much of its combat prowess. It does not degrade by itself, and has lost the ability to turn foes into ally. However, its connexion to its masters still remain, and every ship destroyed by it alongside its own death will empower the League of Evil as though it were a regular League of Evil ship."
+		starting_mark_level="Mark2" 
+		mark_level_scale_style="UN_HackedShips"
+		tech_upgrades_that_benefit_me="Alien"
+		cost_for_ai_to_purchase="100000"		
+		hull_points="13500" shield_points="13500" speed="AboveAverage1"
+		metal_cost="20000" energy_consumption="1000"
+		armor_mm="100" albedo="0.7" mass_tx="5"
+		engine_gx="14"
+		ship_or_structure_explosion_sfx="ShipLostMassive_Explosion"
+		ship_or_structure_explosion_if_on_other_planet_sfx="ShipLostMassive_Explosion"
+		voice_group="Turret"
+		priority_as_ai_target="NormalFleetship" priority_as_frd_target="BiggerFleetship" priority_to_protect="Expendable"
+		>
+		<fleet_membership name="AddedToFleet_MinorFaction" ship_cap_group="Strike" weight="100" cap="18" faction="UniversalNemesis"/>
+		<system name="WJ" display_name="Laser"
+				category="Weapon" firing_timing="OnlyInRange"
+				damage_per_shot="1620" range="Normal2" shot_speed="Normal" rate_of_fire="Normal" fires_salvos_sequentially="true"
+				shot_type_data="HeavyBeamInvisible" beam_length_multiplier="1" beam_weapon_visual_style="Laser_PurpleBright"
+				> 
+			<!--<outgoing_damage_modifier based_on="MaxHull" comparison_type="MultiplesOf" compared_to="67500" multiplier="1" />	-->			
+		</system>
+		<system name="W2" display_name="Hidden Knife"
+				category="Weapon" firing_timing="OnlyInRange"
+				damage_per_shot="2400" range="Normal2" shot_speed="Normal" rate_of_fire="PeriodicActivation" fires_salvos_sequentially="true"
+				shot_type_data="DoubleShot_Green"
+				shots_per_salvo="3"
+				>  
+			<!--<outgoing_damage_modifier based_on="MaxHull" comparison_type="MultiplesOf" compared_to="67500" multiplier="1" />	-->				
+		</system>
+		</entity>
 </root>

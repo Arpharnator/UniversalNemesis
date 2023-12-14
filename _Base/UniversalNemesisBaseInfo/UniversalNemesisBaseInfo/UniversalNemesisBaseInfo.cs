@@ -17,7 +17,6 @@ namespace Arcen.AIW2.External
         public bool nemesisRecuperating = false;
         public Planet fleeDestination = null;
         public DoubleBufferedValue<GameEntity_Squad> Nemesis = new DoubleBufferedValue<GameEntity_Squad>(null);
-        public string cachedValue_NemesisTag = "UniversalNemesis";
         public string NemesisUnitFactionTag = "NemesisFaction";
 
         #region Serialized
@@ -149,8 +148,6 @@ namespace Arcen.AIW2.External
         #region Faction Settings
         public override int GetDifficultyOrdinal_OrNegativeOneIfNotRelevant() => Intensity;
 
-        public string GetNemesisTag() => cachedValue_NemesisTag;
-
         //TODO
         protected override void DoRefreshFromFactionSettings()
         {
@@ -192,7 +189,8 @@ namespace Arcen.AIW2.External
         public override void DoPerSecondLogic_Stage2Aggregating_OnMainThreadAndPartOfSim_ClientAndHost(ArcenClientOrHostSimContextCore Context)
         {
             Nemesis.ClearConstructionValueForStartingConstruction();
-            Nemesis.Construction = AttachedFaction.GetFirstMatching(GetNemesisTag(), true, true);
+
+            Nemesis.Construction = AttachedFaction.GetFirstMatching("UniversalNemesisKing", true, true);
 
             Nemesis.SwitchConstructionToDisplay();
         }

@@ -32,14 +32,17 @@ namespace Arcen.AIW2.External
                 //Lets default to just putting the nanocaust hive on a completely random non-player non-ai-king planet
                 //TODO: improve this
                 GameEntityTypeData entityData ;
+                entityData = GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "UniversalNemesisKing");
+                /*
                 if (BaseInfo.Intensity > 5)
                 {
-                    entityData = GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "UniversalNemesis");
-                }
+                    entityData = GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "UniversalNemesisKing");
+                }*/
+                /*
                 else
                 {
-                    entityData = GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "WeakUniversalNemesis");
-                }
+                    entityData = GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "WeakUniversalNemesisKing");
+                }*/
 
                 Planet spawnPlanet = null;
                 {
@@ -110,7 +113,7 @@ namespace Arcen.AIW2.External
                         ArcenPoint spawnLocation = spawnPlanet.GetSafePlacementPointAroundPlanetCenter(Context, entityData, FInt.FromParts(0, 200), FInt.FromParts(0, 600));
 
                         var azarKing = GameEntity_Squad.CreateNew_ReturnNullIfMPClient(pFaction, entityData, entityData.MarkFor(pFaction),
-                                                    pFaction.FleetUsedAtPlanet, 0, spawnLocation, Context, "UniversalNemesis");
+                                                    pFaction.FleetUsedAtPlanet, 0, spawnLocation, Context, "UniversalNemesisKing");
                         AttachedFaction.HasDoneInvasionStyleAction = true;
                         azarKing.Orders.SetBehaviorDirectlyInSim(EntityBehaviorType.Attacker_Full);
                         SquadViewChatHandlerBase chatHandlerOrNull = ChatClickHandler.CreateNewAs<SquadViewChatHandlerBase>("ShipGeneralFocus");
@@ -263,6 +266,22 @@ namespace Arcen.AIW2.External
                     if (entity == null)
                         return DelReturn.Continue;
 
+                    var factionData = entity.Planet.GetStanceDataForFaction(AttachedFaction);
+                    if (factionData[FactionStance.Hostile].TotalStrength < 2000)
+                    {
+                        GameEntityTypeData beaconTypeData = GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "UniversalBeacon");
+
+                        if (entity.Planet.GetFirstMatching(beaconTypeData, false, false) == null)
+                        {
+                            PlanetFaction pFaction = entity.PlanetFaction;
+                            //hopefully this is dead center
+                            ArcenHostOnlySimContext hostctx = Context.GetHostOnlyContext();
+                            ArcenPoint spawnLocation = entity.Planet.GetSafePlacementPointAroundPlanetCenter(hostctx, beaconTypeData, FInt.FromParts(0, 000), FInt.FromParts(0, 000));
+                            GameEntity_Squad.CreateNew_ReturnNullIfMPClient(pFaction, beaconTypeData, 1, pFaction.FleetUsedAtPlanet, 0, spawnLocation, hostctx, "UniversalBeacon");
+                        }
+                    }
+                        
+
                     if (entity.TypeData.GetHasTag("UniversalCataclysm"))
                     {
                         //debugCode = 300;
@@ -397,15 +416,15 @@ namespace Arcen.AIW2.External
             }
             try
             {
-                //WE DO NOT CHECK FOR MULTIPLE NEMESIS FACTIONS, MAKE SURE THERE IS ONLY ONE
+                //WE DO NOT CHECK FOR MULTIPLE NEMESIS FACTIONS, MAKE SURE THERE IS ONLY ONE EVER
 
                 if (FiringSystemOrNull != null)
                 {
                     debugStage = 5900;
                     //if the Macrophage is enabled and the dying unit is a ship
                     GameEntity_Squad EntityThatKilledTarget = FiringSystemOrNull.ParentEntity;
-                    //if WE were the faction who killed this ship that is dying, then check further.  Otherwise ignore this death.
-                    if (EntityThatKilledTarget != null && EntityThatKilledTarget.GetFactionOrNull_Safe() == AttachedFaction)
+                    //So now we have some shenanigans when stuff is killed because players can also contribute
+                    if (EntityThatKilledTarget != null)
                     {
                         debugStage = 6000;
                         if (EntityThatKilledTarget.TypeData.GetHasTag("LeagueOfEvilUnit"))
@@ -414,13 +433,29 @@ namespace Arcen.AIW2.External
                             
                             int gains = entity.GetStrengthPerSquad() + entity.GetStrengthPerSquad() * numExtraStacksKilled;
                             gains /= 10; //i suppose this might lower a bit low values (ie small strikecraft), but should be fine
-                            gains *= BaseInfo.gain_multiplier_per_intensity;
+                            gains *= BaseInfo.gain_multiplier_per_intensity * BaseInfo.Intensity;
                             //this is what lies inside of the Base Info, for generic information.
                             //then when this gets used, it is divided based on the ship tier that gets augmented.
                             BaseInfo.bonusHull += gains;
                             BaseInfo.bonusShield += gains;
                         }
                     }
+                }
+
+                //We are checking for our own units dying here
+                //so uh as a sidenote, make sure this tag can't be gained by any units other than the one specifically in the faction
+                //unless you want weird stuff like get unit but feed the nemesis, which i guess is interesting
+                //Technically this also feeds on beacons, which can be put a rather large amount of times, but the strength value is low so it should be fine even if chain killing a few
+                //in fact there aren't even that much
+                if (entity.TypeData.GetHasTag("LeagueOfEvilUnit"))
+                {
+                    int gains = entity.GetStrengthPerSquad() + entity.GetStrengthPerSquad() * numExtraStacksKilled;
+                    gains /= 10; //i suppose this might lower a bit low values (ie small strikecraft), but should be fine
+                    gains *= BaseInfo.gain_multiplier_per_intensity * BaseInfo.Intensity;
+                    //this is what lies inside of the Base Info, for generic information.
+                    //then when this gets used, it is divided based on the ship tier that gets augmented.
+                    BaseInfo.bonusHull += gains;
+                    BaseInfo.bonusShield += gains;
                 }
             }
             catch
@@ -437,7 +472,14 @@ namespace Arcen.AIW2.External
 
             World_AIW2.Instance.DoForPlanetsSingleThread(false, delegate (Planet planet)
             {
+                //Beacons give influence
+                GameEntityTypeData beaconTypeData = GameEntityTypeDataTable.Instance.GetRandomRowWithTag(Context, "UniversalBeacon");
+                if (planet.GetFirstMatching(beaconTypeData, false, false) != null)
+                {
+                    planetsInfluenced.AddIfNotAlreadyIn(planet);
+                }
                 //player is a nono, in case i plan to spawn waves
+                /*
                 if (planet.GetControllingFactionType() == FactionType.Player)
                     return DelReturn.Continue;
                 var factionData = planet.GetStanceDataForFaction(AttachedFaction);
@@ -445,7 +487,7 @@ namespace Arcen.AIW2.External
                 {
                     planetsInfluenced.AddIfNotAlreadyIn(planet);
                 }
-
+                */
                 return DelReturn.Continue;
             });
 

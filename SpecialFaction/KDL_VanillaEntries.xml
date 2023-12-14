@@ -2,7 +2,7 @@
 <root>
     <faction name="UniversalNemesis" 
     display_name="League of Evil" short_name="League of Evil" processing_group="UniversalNemesis"
-    base_info_source="UniversalNemesisBaseInfo" deep_info_source="UniversalNemesisDeepInfo" team_center_color="cEF9B0F" team_border_color="c2e5090"
+    base_info_source="UniversalNemesisBaseInfo" deep_info_source="UniversalNemesisDeepInfo" team_center_color="c343434" team_border_color="c8F00FF"
     type="SpecialFaction"
     description="The Universal Nemesis has arrived into the galaxy. It will attempt to lay waste to it in order to strengthen itself and its troops.
 

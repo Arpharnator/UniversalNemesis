@@ -17,14 +17,14 @@
 		<spawn entity="VWing" count="20" mark_level="1" faction_name="AI" x="4000" y="-8000" />
 		
 		<spawn entity="UniversalCataclysm" count="1" mark_level="1" faction_name="FirstPlayer" x="4000" y="-8000" />
-		<!--
+		
 		<spawn entity="UniversalNemesis" count="1" mark_level="1" faction_name="FirstPlayer" x="4000" y="-8000" />
 		
 		<spawn entity="UniversalCatastrophe" count="1" mark_level="1" faction_name="FirstPlayer" x="4000" y="-8000" />
 		<spawn entity="UniversalDisaster" count="1" mark_level="1" faction_name="FirstPlayer" x="4000" y="-8000" />
 		<spawn entity="UniversalVillain" count="1" mark_level="1" faction_name="FirstPlayer" x="4000" y="-8000" />
 		<spawn entity="UniversalHenchman" count="1" mark_level="1" faction_name="FirstPlayer" x="4000" y="-8000" />
-		-->
+		
 		<!--
 		<spawn entity="TurboRaider" count="1" mark_level="1" faction_name="AI" x="4000" y="-8000" />
 		<spawn entity="TurboRaider" count="20" mark_level="1" faction_name="AI" x="4000" y="-8000" />
