@@ -3,9 +3,52 @@ using Arcen.Universal;
 using System;
 using UnityEngine;
 using Arcen.AIW2.External;
+using System.Threading.Tasks;
 
 namespace Arcen.AIW2.External
 {
+
+    public class UniversalNemesisGeneric_SquadInfo : ExternalSquadBaseInfo
+    {
+        public int saveHullPointLost;
+        public int saveShieldPointLost;
+        public bool secondAfterSave;
+        public override void CopyTo( ExternalSquadBaseInfo CopyTarget )
+        {
+            var other = CopyTarget as UniversalNemesisGeneric_SquadInfo;
+            other.saveHullPointLost = this.saveHullPointLost;
+            other.saveShieldPointLost = this.saveShieldPointLost;
+            other.secondAfterSave = this.secondAfterSave;
+        }
+
+        public override void DeserializeIntoSelf( SerMetaData MetaData, ArcenDeserializationBuffer Buffer, SerializationCommandType SerializationCmdType )
+        {
+            saveHullPointLost = Buffer.ReadInt32( MetaData, ReadStyle.NonNeg, "UniversalNemesisGeneric_SquadInfo.saveHullPointLost" );
+            saveShieldPointLost = Buffer.ReadInt32( MetaData, ReadStyle.NonNeg, "UniversalNemesisGeneric_SquadInfo.saveShieldPointLost" );
+            secondAfterSave = true;
+        }
+
+        public override void DoAfterSingleOtherShipMergedIntoOurStack( ExternalSquadBaseInfo OtherShipBeingDiscarded )
+        {
+        }
+
+        public override void DoAfterStackSplitAndCopy( int OriginalStackCount, int MyPersonalNewStackCount )
+        {
+        }
+
+        public override void SerializeTo( SerMetaData MetaData, ArcenSerializationBuffer Buffer, SerializationCommandType SerializationCmdType )
+        {
+            Buffer.AddInt32( MetaData, ReadStyle.NonNeg, saveHullPointLost, "UniversalNemesisGeneric_SquadInfo.saveHullPointLost" );
+            Buffer.AddInt32( MetaData, ReadStyle.NonNeg, saveShieldPointLost, "UniversalNemesisGeneric_SquadInfo.saveShieldPointLost" );
+        }
+
+        protected override void Cleanup()
+        {
+            saveHullPointLost = 0;
+            saveShieldPointLost = 0;
+            secondAfterSave = false;
+        }
+    }
 
     public class UniversalNemesis_CustomLogic : IGameEntityStatAdjuster, IGameEntityDamageAdjuster, IGameEntityPerSecondSpecialLogic, IGameEntityDescriptionAppender
     {
@@ -145,6 +188,24 @@ namespace Arcen.AIW2.External
             //Avoids gamestart harmless errors
             try
             {
+                var squad = RelatedEntity as GameEntity_Squad;
+                UniversalNemesisGeneric_SquadInfo info;
+                if ( squad.TryGetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>() == null )
+                {
+                    squad.CreateExternalBaseInfo<UniversalNemesisGeneric_SquadInfo>( "UniversalNemesisGeneric_SquadInfo" );
+                    info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+                }
+                info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+
+                if ( info.secondAfterSave )
+                {
+                    squad.HullPointsLost = info.saveHullPointLost;
+                    squad.ShieldPointsLost = info.saveShieldPointLost;
+                    info.secondAfterSave = false;
+                }
+                info.saveHullPointLost = squad.HullPointsLost;
+                info.saveShieldPointLost = squad.ShieldPointsLost;
+
                 UniversalNemesisBaseInfo factionExternal = RelatedEntity.GetFactionOrNull_Safe().BaseInfo.AttachedFaction.GetExternalBaseInfoAs<UniversalNemesisBaseInfo>();
                 GameEntity_Squad Nemesis = factionExternal.Nemesis.Display;
                 PerFactionPathCache pathingCacheData = PerFactionPathCache.GetCacheForTemporaryUse_MustReturnToPoolAfterUseOrLeaksMemory();
@@ -397,7 +458,23 @@ namespace Arcen.AIW2.External
 
         public void RunEntitySpecialPerSecondLogic(GameEntity_Base RelatedEntity, ArcenClientOrHostSimContextCore Context)
         {
-            //wow
+            var squad = RelatedEntity as GameEntity_Squad;
+            UniversalNemesisGeneric_SquadInfo info;
+            if ( squad.TryGetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>() == null )
+            {
+                squad.CreateExternalBaseInfo<UniversalNemesisGeneric_SquadInfo>( "UniversalNemesisGeneric_SquadInfo" );
+                info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+            }
+            info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+
+            if ( info.secondAfterSave )
+            {
+                squad.HullPointsLost = info.saveHullPointLost;
+                squad.ShieldPointsLost = info.saveShieldPointLost;
+                info.secondAfterSave = false;
+            }
+            info.saveHullPointLost = squad.HullPointsLost;
+            info.saveShieldPointLost = squad.ShieldPointsLost;
         }
 
         void IArcenExternalClassThatClearsDataPriorToMainMenuOrNewMap.ClearAllMyDataForQuitToMainMenuOrBeforeNewMap()
@@ -493,7 +570,23 @@ namespace Arcen.AIW2.External
 
         public void RunEntitySpecialPerSecondLogic(GameEntity_Base RelatedEntity, ArcenClientOrHostSimContextCore Context)
         {
-            //wow
+            var squad = RelatedEntity as GameEntity_Squad;
+            UniversalNemesisGeneric_SquadInfo info;
+            if ( squad.TryGetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>() == null )
+            {
+                squad.CreateExternalBaseInfo<UniversalNemesisGeneric_SquadInfo>( "UniversalNemesisGeneric_SquadInfo" );
+                info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+            }
+            info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+
+            if ( info.secondAfterSave )
+            {
+                squad.HullPointsLost = info.saveHullPointLost;
+                squad.ShieldPointsLost = info.saveShieldPointLost;
+                info.secondAfterSave = false;
+            }
+            info.saveHullPointLost = squad.HullPointsLost;
+            info.saveShieldPointLost = squad.ShieldPointsLost;
         }
 
         void IArcenExternalClassThatClearsDataPriorToMainMenuOrNewMap.ClearAllMyDataForQuitToMainMenuOrBeforeNewMap()
@@ -587,7 +680,23 @@ namespace Arcen.AIW2.External
 
         public void RunEntitySpecialPerSecondLogic(GameEntity_Base RelatedEntity, ArcenClientOrHostSimContextCore Context)
         {
-            //wow
+            var squad = RelatedEntity as GameEntity_Squad;
+            UniversalNemesisGeneric_SquadInfo info;
+            if ( squad.TryGetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>() == null )
+            {
+                squad.CreateExternalBaseInfo<UniversalNemesisGeneric_SquadInfo>( "UniversalNemesisGeneric_SquadInfo" );
+                info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+            }
+            info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+
+            if ( info.secondAfterSave )
+            {
+                squad.HullPointsLost = info.saveHullPointLost;
+                squad.ShieldPointsLost = info.saveShieldPointLost;
+                info.secondAfterSave = false;
+            }
+            info.saveHullPointLost = squad.HullPointsLost;
+            info.saveShieldPointLost = squad.ShieldPointsLost;
         }
 
         void IArcenExternalClassThatClearsDataPriorToMainMenuOrNewMap.ClearAllMyDataForQuitToMainMenuOrBeforeNewMap()
@@ -681,7 +790,23 @@ namespace Arcen.AIW2.External
 
         public void RunEntitySpecialPerSecondLogic(GameEntity_Base RelatedEntity, ArcenClientOrHostSimContextCore Context)
         {
-            //wow
+            var squad = RelatedEntity as GameEntity_Squad;
+            UniversalNemesisGeneric_SquadInfo info;
+            if ( squad.TryGetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>() == null )
+            {
+                squad.CreateExternalBaseInfo<UniversalNemesisGeneric_SquadInfo>( "UniversalNemesisGeneric_SquadInfo" );
+                info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+            }
+            info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+
+            if ( info.secondAfterSave )
+            {
+                squad.HullPointsLost = info.saveHullPointLost;
+                squad.ShieldPointsLost = info.saveShieldPointLost;
+                info.secondAfterSave = false;
+            }
+            info.saveHullPointLost = squad.HullPointsLost;
+            info.saveShieldPointLost = squad.ShieldPointsLost;
         }
 
         void IArcenExternalClassThatClearsDataPriorToMainMenuOrNewMap.ClearAllMyDataForQuitToMainMenuOrBeforeNewMap()
@@ -778,7 +903,23 @@ namespace Arcen.AIW2.External
 
         public void RunEntitySpecialPerSecondLogic(GameEntity_Base RelatedEntity, ArcenClientOrHostSimContextCore Context)
         {
-            //wow
+            var squad = RelatedEntity as GameEntity_Squad;
+            UniversalNemesisGeneric_SquadInfo info;
+            if ( squad.TryGetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>() == null )
+            {
+                squad.CreateExternalBaseInfo<UniversalNemesisGeneric_SquadInfo>( "UniversalNemesisGeneric_SquadInfo" );
+                info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+            }
+            info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+
+            if ( info.secondAfterSave )
+            {
+                squad.HullPointsLost = info.saveHullPointLost;
+                squad.ShieldPointsLost = info.saveShieldPointLost;
+                info.secondAfterSave = false;
+            }
+            info.saveHullPointLost = squad.HullPointsLost;
+            info.saveShieldPointLost = squad.ShieldPointsLost;
         }
 
         void IArcenExternalClassThatClearsDataPriorToMainMenuOrNewMap.ClearAllMyDataForQuitToMainMenuOrBeforeNewMap()
@@ -876,7 +1017,23 @@ namespace Arcen.AIW2.External
 
         public void RunEntitySpecialPerSecondLogic(GameEntity_Base RelatedEntity, ArcenClientOrHostSimContextCore Context)
         {
-            //wow
+            var squad = RelatedEntity as GameEntity_Squad;
+            UniversalNemesisGeneric_SquadInfo info;
+            if ( squad.TryGetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>() == null )
+            {
+                squad.CreateExternalBaseInfo<UniversalNemesisGeneric_SquadInfo>( "UniversalNemesisGeneric_SquadInfo" );
+                info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+            }
+            info = squad.GetExternalBaseInfoAs<UniversalNemesisGeneric_SquadInfo>();
+
+            if ( info.secondAfterSave )
+            {
+                squad.HullPointsLost = info.saveHullPointLost;
+                squad.ShieldPointsLost = info.saveShieldPointLost;
+                info.secondAfterSave = false;
+            }
+            info.saveHullPointLost = squad.HullPointsLost;
+            info.saveShieldPointLost = squad.ShieldPointsLost;
         }
 
         void IArcenExternalClassThatClearsDataPriorToMainMenuOrNewMap.ClearAllMyDataForQuitToMainMenuOrBeforeNewMap()
